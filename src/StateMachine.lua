@@ -1,4 +1,3 @@
--- declaring the StateMachine as a class
 StateMachine = Class{}
 
 function StateMachine:init(states)

@@ -13,6 +13,15 @@ function StartState:update(dt)
         gSounds['paddle-hit']:play()
     end
 
+    -- confirm whichever option we have selected to change screens
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gSounds['confirm']:play()
+
+        if highlighted == 1 then
+            gStateMachine:change('play')
+        end
+    end
+
     -- here if the escape key is pressed the game is quit
     if love.keyboard.wasPressed('escape') then
         love.event.quit()

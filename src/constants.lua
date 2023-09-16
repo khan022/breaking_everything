@@ -9,3 +9,6 @@ WINDOW_HEIGHT = 720
 -- size of the virtual window for push
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
+
+-- paddle movement speed
+PADDLE_SPEED = 200
