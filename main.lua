@@ -33,7 +33,8 @@ function love.load()
     -- to get the quads for all textures
     gFrames = {
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
-        ['balls'] = GenerateQuadsBalls(gTextures['main'])
+        ['balls'] = GenerateQuadsBalls(gTextures['main']),
+        ['bricks'] = GenerateQuadsBricks(gTextures['main'])
     }
 
     -- setting up the virtual sceen with virtual width and height resolution

@@ -12,7 +12,7 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     for y = 0, sheetHeight - 1 do
         for x = 0, sheetWidth -1 do
             spritesheet[sheetCounter] = love.graphics.newQuad(x * tilewidth, y * tileheight, tilewidth, 
-            tileheight, atlasText:getDimensions())
+            tileheight, atlas:getDimensions())
             sheetCounter = sheetCounter + 1
         end
     end
@@ -33,6 +33,11 @@ function table.slice(tbl, first, last, step)
 
     return sliced
 
+end
+
+-- generate bricks for new game
+function GenerateQuadsBricks(atlas)
+    return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
 end
 
 -- generate quad paddles with python function
@@ -95,3 +100,4 @@ function GenerateQuadsBalls(atlas)
 
     return quads
 end
+
