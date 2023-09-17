@@ -6,8 +6,9 @@ Class = require 'lib/class'
 -- for global constants
 require 'src/constants'
 
--- for paddles
+-- for paddles and balls
 require 'src/Paddle'
+require 'src/Ball'
 
 -- for StateMachines and different states
 require 'src/StateMachine'
