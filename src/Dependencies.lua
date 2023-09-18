@@ -5,7 +5,7 @@ Class = require 'lib/class'
 
 -- for global constants
 require 'src/constants'
-require 'src/classes/levelMaker'
+require 'src/classes/LevelMaker'
 
 -- for paddles and balls and bricks
 require 'src/classes/Paddle'
@@ -21,3 +21,5 @@ require 'src/Util'
 require 'src/states/BaseState'
 require 'src/states/PlayState'
 require 'src/states/StartState'
+require 'src/states/ServeState'
+require 'src/states/GameOverState'

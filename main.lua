@@ -24,7 +24,7 @@ function love.load()
     -- load images as global variables
     gTextures = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
-        ['main'] = love.graphics.newImage('graphics/dx_ball.png'),
+        ['main'] = love.graphics.newImage('graphics/breakout.png'),
         ['arrows'] = love.graphics.newImage('graphics/arrows.png'),
         ['hearts'] = love.graphics.newImage('graphics/hearts.png'),
         ['particle'] = love.graphics.newImage('graphics/particle.png')
@@ -34,7 +34,8 @@ function love.load()
     gFrames = {
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
-        ['bricks'] = GenerateQuadsBricks(gTextures['main'])
+        ['bricks'] = GenerateQuadsBricks(gTextures['main']),
+        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
     }
 
     -- setting up the virtual sceen with virtual width and height resolution
@@ -66,7 +67,9 @@ function love.load()
     -- StateMachine to divide the game up into different states. 
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['serve'] = function() return ServeState() end,
+        ['game-over'] = function() return GameOverState() end
     }
     gStateMachine:change('start')
     
@@ -138,6 +141,23 @@ function love.draw()
 
 end
 
+-- rendering the count of health with heart
+function renderHealth(health)
+    local healthX = VIRTUAL_WIDTH - 100
+
+    -- render health left
+    for i = 1, health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][1], healthX, 4)
+        healthX = healthX + 11
+    end
+
+    -- render missing health
+    for i = 1, 3 - health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][2], healthX, 4)
+        healthX = healthX + 11
+    end
+end
+
 -- count and display the FPS on the screen
 function displayFPS()
 
@@ -146,4 +166,11 @@ function displayFPS()
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 
+end
+
+-- rendering the scores on the screen
+function renderScore(score)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
+    love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
 end
