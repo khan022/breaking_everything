@@ -5,6 +5,10 @@ StartState = Class{__includes = BaseState}
 -- highlighting the "new game" or the "high scores"
 local highlighted = 1
 
+function StartState:enter(params)
+    self.highScores = params.highScores
+end
+
 function StartState:update(dt)
 
     -- toggle the highlighted option if we press arrow key
@@ -24,6 +28,10 @@ function StartState:update(dt)
                 health = 3,
                 score = 0, 
                 level = 1
+            })
+        else
+            gStateMachine:change('high-scores', {
+                highScores = self.highScores
             })
         end
     end

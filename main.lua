@@ -70,9 +70,12 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['serve'] = function() return ServeState() end,
         ['game-over'] = function() return GameOverState() end,
-        ['victory'] = function() return VictoryState() end
+        ['victory'] = function() return VictoryState() end,
+        ['high-scores'] = function() return HighScoreState() end
     }
-    gStateMachine:change('start')
+    gStateMachine:change('start', {
+        highScores = loadHighScores()
+    })
     
     -- get the keyspressed
     love.keyboard.keysPressed = {}
@@ -140,6 +143,53 @@ function love.draw()
 
     push:apply('end')
 
+end
+
+-- function load the highscores
+function loadHighScores()
+    love.filesystem.setIdentity('dx_ball')
+
+    -- if the filesystem doesn't exist initialize it with random values
+    if not love.filesystem.exists('dx_ball.lst') then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'SKS\n'
+            scores = scores .. tostring(i * 1000) .. '\n'
+        end
+
+        love.filesystem.write('dx_ball.lst', scores)
+    end
+
+    -- flag for whether we're reading a name or not
+    local name = true
+    local currentName = nil
+    local counter = 1
+
+    -- initialize scores table with at least 10 blank entries
+    local scores = {}
+
+    for i = 1, 10 do
+        -- blank table; each will hold a name and a score
+        scores[i] = {
+            name = nil,
+            score = nil
+        }
+    end
+
+    -- iterate over each line in the file, filling in names and scores
+    for line in love.filesystem.lines('dx_ball.lst') do
+        if name then
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+
+        -- flip the name flag
+        name = not name
+    end
+
+    return scores
 end
 
 -- rendering the count of health with heart
