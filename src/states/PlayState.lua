@@ -132,6 +132,11 @@ function PlayState:update(dt)
         end
     end
 
+    -- for rendering particle systems
+    for k, brick in pairs(self.bricks) do
+        brick:update(dt)
+    end
+
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
@@ -141,6 +146,11 @@ function PlayState:render()
     -- render the bricks
     for k, brick in pairs(self.bricks) do
         brick:render()
+    end
+
+    -- render all particle systems
+    for k, brick in pairs(self.bricks) do
+        brick:renderParticles()
     end
 
     self.paddle:render()
