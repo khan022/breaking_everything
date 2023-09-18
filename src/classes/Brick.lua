@@ -17,9 +17,32 @@ end
 -- triggering the hit on brick
 function Brick:hit()
     -- sound of hitting the brick
+    gSounds['brick-hit-2']:stop()
     gSounds['brick-hit-2']:play()
 
-    self.inPlay = false
+    -- if we at a higher tier than go down a tier, if we at the lowest color than change the color
+    if self.tier > 0 then
+        if self.color == 1 then
+            self.tier = self.tier - 1
+            self.color = 5
+        else
+            self.color = self.color - 1
+        end
+
+    else
+        -- if we are at the first base color then remove the brick from play
+        if self.color == 1 then
+            self.inPlay = false
+        else
+            self.color = self.color - 1
+        end
+    end
+
+    -- play a second layer sound if they are destroyed
+    if not self.inPlay then
+        gSounds['brick-hit-1']:stop()
+        gSounds['brick-hit-1']:play()
+    end
 end
 
 -- rendering the brick
