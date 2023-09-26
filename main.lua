@@ -71,7 +71,8 @@ function love.load()
         ['serve'] = function() return ServeState() end,
         ['game-over'] = function() return GameOverState() end,
         ['victory'] = function() return VictoryState() end,
-        ['high-scores'] = function() return HighScoreState() end
+        ['high-scores'] = function() return HighScoreState() end,
+        ['enter-high-score'] = function() return EnterHighScoreState() end
     }
     gStateMachine:change('start', {
         highScores = loadHighScores()
@@ -154,7 +155,7 @@ function loadHighScores()
         local scores = ''
         for i = 10, 1, -1 do
             scores = scores .. 'SKS\n'
-            scores = scores .. tostring(i * 1000) .. '\n'
+            scores = scores .. tostring(i * 0000) .. '\n'
         end
 
         love.filesystem.write('dx_ball.lst', scores)
