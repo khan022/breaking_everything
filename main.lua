@@ -11,7 +11,7 @@ function love.load()
     math.randomseed(os.time())
 
     -- set the application title bar
-    love.window.setTitle('Dx Ball!')
+    love.window.setTitle('Dx Ball!!!')
 
     -- initiating retro looking fonts
     gFonts = {
@@ -79,6 +79,10 @@ function love.load()
     gStateMachine:change('start', {
         highScores = loadHighScores()
     })
+    
+    -- play our music outside of all states and set it to looping
+    gSounds['music']:play()
+    gSounds['music']:setLooping(true)
     
     -- get the keyspressed
     love.keyboard.keysPressed = {}

@@ -69,6 +69,17 @@ function EnterHighScoreState:update(dt)
             chars[highlightedChar] = 90
         end
     end
+
+
+    -- return to the start screen if we press escape
+    if love.keyboard.wasPressed('escape') then
+        gSounds['wall-hit']:play()
+        
+        gStateMachine:change('start', {
+            highScores = self.highScores
+        })
+    end
+
 end
 
 -- render the high-scores 

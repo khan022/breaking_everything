@@ -35,6 +35,15 @@ end
 
 function PlayState:update(dt)
     if self.paused then
+        -- return to the start screen if we press escape
+        if love.keyboard.wasPressed('escape') then
+            gSounds['wall-hit']:play()
+        
+            gStateMachine:change('start', {
+                highScores = self.highScores
+            })
+        end
+        
         if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') then
             self.paused = false
             gSounds['pause']:play()
@@ -156,9 +165,9 @@ function PlayState:update(dt)
         brick:update(dt)
     end
 
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
+    -- if love.keyboard.wasPressed('escape') then
+    --     love.event.quit()
+    -- end
 end
 
 function PlayState:render()

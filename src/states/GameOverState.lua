@@ -35,8 +35,13 @@ function GameOverState:update(dt)
         end
     end
 
+    -- return to the start screen if we press escape
     if love.keyboard.wasPressed('escape') then
-        love.event.quit()
+        gSounds['wall-hit']:play()
+        
+        gStateMachine:change('start', {
+            highScores = self.highScores
+        })
     end
 end
 
