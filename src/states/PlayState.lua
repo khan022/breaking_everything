@@ -1,5 +1,7 @@
 PlayState = Class{__includes = BaseState}
 
+local scoreThreshold = 1500 
+
 -- function PlayState:init()
 --     self.paddle = Paddle()
 
@@ -37,9 +39,10 @@ function PlayState:update(dt)
     if self.paused then
         -- return to the start screen if we press escape
         if love.keyboard.wasPressed('escape') then
-            gSounds['wall-hit']:play()
+            gSounds['confirm']:play()
         
-            gStateMachine:change('start', {
+            gStateMachine:change('game-over', {
+                score = self.score,
                 highScores = self.highScores
             })
         end
@@ -87,6 +90,14 @@ function PlayState:update(dt)
 
             -- add score
             self.score = self.score + (brick.tier * 200 + brick.color * 25)
+
+            -- add health if scores over 500 and health less than 3
+            if self.health < 3 and self.score >= scoreThreshold  then
+                self.health = self.health + 1
+                scoreThreshold = scoreThreshold * 3 + self.score
+                gSounds['recover']:play()
+                renderHealth(self.health)
+            end
 
             -- trigger the brick hit function
             brick:hit()
